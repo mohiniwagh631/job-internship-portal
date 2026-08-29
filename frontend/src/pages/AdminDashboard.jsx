@@ -24,7 +24,12 @@ import {
   useNavigate,
 } from "react-router-dom";
 
-import { useEffect, useMemo, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 import "../styles/adminDashboard.css";
 
@@ -94,9 +99,8 @@ function AdminDashboard() {
   // FETCH DASHBOARD
   // =====================================
 
-  const fetchDashboard = async (
-    showRefresh = false
-  ) => {
+const fetchDashboard = useCallback(
+  async (showRefresh = false) => {
     try {
       if (showRefresh) {
         setRefreshing(true);
@@ -106,43 +110,35 @@ function AdminDashboard() {
 
       setError("");
 
-      const token =
-        localStorage.getItem("token");
+      const token = localStorage.getItem("token");
 
       if (!token) {
         navigate("/login", {
           replace: true,
         });
-
         return;
       }
 
       const response = await fetch(
-        "http://localhost:5000/api/admin/dashboard",
+        `${process.env.REACT_APP_API_URL}/api/admin/dashboard`,
         {
           method: "GET",
-
           headers: {
-            Authorization:
-              `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
 
-      const data =
-        await response.json();
+      const data = await response.json();
 
       if (!response.ok) {
         throw new Error(
-          data.message ||
-            "Unable to load dashboard"
+          data.message || "Unable to load dashboard"
         );
       }
 
       setDashboardData(data);
-
     } catch (error) {
-
       console.error(
         "Admin Dashboard Error:",
         error
@@ -154,7 +150,8 @@ function AdminDashboard() {
       );
 
       if (
-        error.message?.toLowerCase()
+        error.message
+          ?.toLowerCase()
           .includes("token")
       ) {
         localStorage.removeItem("token");
@@ -164,20 +161,21 @@ function AdminDashboard() {
           replace: true,
         });
       }
-
     } finally {
       setLoading(false);
       setRefreshing(false);
     }
-  };
+  },
+  [navigate]
+);
 
   // =====================================
   // FETCH ON PAGE LOAD
   // =====================================
 
-  useEffect(() => {
-    fetchDashboard();
-  }, []);
+ useEffect(() => {
+  fetchDashboard();
+}, [fetchDashboard]);
 
   // =====================================
   // LOGOUT

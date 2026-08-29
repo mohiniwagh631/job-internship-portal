@@ -48,7 +48,7 @@ function MyProfile() {
 
       try {
         const response = await fetch(
-          "http://localhost:5000/api/profile",
+          `${process.env.REACT_APP_API_URL}/api/profile`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -134,7 +134,7 @@ function MyProfile() {
         .filter((skill) => skill.length > 0);
 
       const response = await fetch(
-        "http://localhost:5000/api/profile",
+        `${process.env.REACT_APP_API_URL}/api/profile`,
         {
           method: "PUT",
 

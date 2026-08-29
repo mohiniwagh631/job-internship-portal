@@ -84,7 +84,7 @@ function Dashboard() {
         // =================================================
 
         const profileResponse = await fetch(
-          "http://localhost:5000/api/profile",
+          `${process.env.REACT_APP_API_URL}/api/profile`,
           {
             method: "GET",
 
@@ -143,7 +143,7 @@ function Dashboard() {
         try {
           const applicationResponse =
             await fetch(
-              "http://localhost:5000/api/applications/my",
+              `${process.env.REACT_APP_API_URL}/api/applications/my`,
               {
                 method: "GET",
 

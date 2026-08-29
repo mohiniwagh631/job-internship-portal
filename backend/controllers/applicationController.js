@@ -1,8 +1,35 @@
-const fs = require("fs");
-const path = require("path");
+const cloudinary = require("../config/cloudinary");
 
 const Application = require("../models/Application");
 const Job = require("../models/Job");
+
+// =====================================
+// UPLOAD BUFFER TO CLOUDINARY
+// =====================================
+
+const uploadResumeToCloudinary = (fileBuffer) => {
+  return new Promise((resolve, reject) => {
+    const uploadStream =
+      cloudinary.uploader.upload_stream(
+        {
+          folder: "jobhub/resumes",
+
+          // Important for PDF files
+          resource_type: "raw",
+        },
+
+        (error, result) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(result);
+          }
+        }
+      );
+
+    uploadStream.end(fileBuffer);
+  });
+};
 
 // =====================================
 // APPLY FOR JOB
@@ -18,39 +45,46 @@ const createApplication = async (req, res) => {
 
     const candidateId = req.user.id;
 
-    // Check job ID
+    // =====================================
+    // CHECK JOB ID
+    // =====================================
+
     if (!jobId) {
       return res.status(400).json({
         message: "Job ID is required",
       });
     }
 
-    // Check resume
+    // =====================================
+    // CHECK RESUME
+    // =====================================
+
     if (!req.file) {
       return res.status(400).json({
         message: "Resume PDF is required",
       });
     }
 
-    // Find active job
+    // =====================================
+    // FIND ACTIVE JOB
+    // =====================================
+
     const job = await Job.findOne({
       _id: jobId,
       isActive: true,
     });
 
     if (!job) {
-      // Delete uploaded file
-      if (req.file.path) {
-        fs.unlinkSync(req.file.path);
-      }
-
       return res.status(404).json({
         message:
           "Job not found or no longer active",
       });
     }
 
-    // Check duplicate application
+    // =====================================
+    // CHECK DUPLICATE APPLICATION
+    // =====================================
+
     const existingApplication =
       await Application.findOne({
         job: jobId,
@@ -58,17 +92,25 @@ const createApplication = async (req, res) => {
       });
 
     if (existingApplication) {
-      if (req.file.path) {
-        fs.unlinkSync(req.file.path);
-      }
-
       return res.status(409).json({
         message:
           "You have already applied for this opportunity",
       });
     }
 
-    // Create application
+    // =====================================
+    // UPLOAD RESUME TO CLOUDINARY
+    // =====================================
+
+    const uploadResult =
+      await uploadResumeToCloudinary(
+        req.file.buffer
+      );
+
+    // =====================================
+    // CREATE APPLICATION
+    // =====================================
+
     const application =
       await Application.create({
         job: jobId,
@@ -80,10 +122,14 @@ const createApplication = async (req, res) => {
             req.file.originalname,
 
           fileName:
-            req.file.filename,
+            uploadResult.original_filename ||
+            req.file.originalname,
 
-          path:
-            req.file.path,
+          url:
+            uploadResult.secure_url,
+
+          publicId:
+            uploadResult.public_id,
         },
 
         coverLetter:
@@ -91,6 +137,10 @@ const createApplication = async (req, res) => {
 
         status: "Applied",
       });
+
+    // =====================================
+    // POPULATE APPLICATION
+    // =====================================
 
     const populatedApplication =
       await Application.findById(
@@ -105,6 +155,10 @@ const createApplication = async (req, res) => {
           "name email"
         );
 
+    // =====================================
+    // SUCCESS
+    // =====================================
+
     res.status(201).json({
       message:
         "Application submitted successfully",
@@ -112,28 +166,28 @@ const createApplication = async (req, res) => {
       application:
         populatedApplication,
     });
+
   } catch (error) {
+
     console.error(
       "Create Application Error:",
       error
     );
 
-    // Remove uploaded file if something failed
-    if (req.file?.path) {
-      try {
-        fs.unlinkSync(req.file.path);
-      } catch (deleteError) {
-        console.error(deleteError);
-      }
-    }
+    // =====================================
+    // DUPLICATE MONGODB INDEX
+    // =====================================
 
-    // Duplicate MongoDB index
     if (error.code === 11000) {
       return res.status(409).json({
         message:
           "You have already applied for this opportunity",
       });
     }
+
+    // =====================================
+    // CLOUDINARY / SERVER ERROR
+    // =====================================
 
     res.status(500).json({
       message:
@@ -143,7 +197,6 @@ const createApplication = async (req, res) => {
     });
   }
 };
-
 
 // =====================================
 // MY APPLICATIONS
@@ -155,6 +208,7 @@ const getMyApplications = async (
   res
 ) => {
   try {
+
     const applications =
       await Application.find({
         candidate: req.user.id,
@@ -169,9 +223,12 @@ const getMyApplications = async (
 
     res.status(200).json({
       count: applications.length,
+
       applications,
     });
+
   } catch (error) {
+
     console.error(
       "Get My Applications Error:",
       error
@@ -184,7 +241,6 @@ const getMyApplications = async (
   }
 };
 
-
 // =====================================
 // CHECK MY APPLICATION FOR JOB
 // Candidate only
@@ -195,17 +251,23 @@ const checkApplication = async (
   res
 ) => {
   try {
+
     const application =
       await Application.findOne({
         job: req.params.jobId,
+
         candidate: req.user.id,
       });
 
     res.status(200).json({
       applied: !!application,
-      application: application || null,
+
+      application:
+        application || null,
     });
+
   } catch (error) {
+
     console.error(
       "Check Application Error:",
       error
@@ -218,7 +280,6 @@ const checkApplication = async (
   }
 };
 
-
 // =====================================
 // GET ALL APPLICATIONS
 // Admin only
@@ -229,6 +290,7 @@ const getAllApplications = async (
   res
 ) => {
   try {
+
     const applications =
       await Application.find()
         .populate(
@@ -245,9 +307,12 @@ const getAllApplications = async (
 
     res.status(200).json({
       count: applications.length,
+
       applications,
     });
+
   } catch (error) {
+
     console.error(
       "Get All Applications Error:",
       error
@@ -260,7 +325,6 @@ const getAllApplications = async (
   }
 };
 
-
 // =====================================
 // UPDATE APPLICATION STATUS
 // Admin only
@@ -271,6 +335,7 @@ const updateApplicationStatus = async (
   res
 ) => {
   try {
+
     const {
       status,
     } = req.body;
@@ -283,6 +348,10 @@ const updateApplicationStatus = async (
       "Rejected",
     ];
 
+    // =====================================
+    // CHECK STATUS
+    // =====================================
+
     if (
       !allowedStatuses.includes(status)
     ) {
@@ -291,6 +360,10 @@ const updateApplicationStatus = async (
           "Invalid application status",
       });
     }
+
+    // =====================================
+    // FIND APPLICATION
+    // =====================================
 
     const application =
       await Application.findById(
@@ -304,9 +377,17 @@ const updateApplicationStatus = async (
       });
     }
 
+    // =====================================
+    // UPDATE STATUS
+    // =====================================
+
     application.status = status;
 
     await application.save();
+
+    // =====================================
+    // POPULATE UPDATED APPLICATION
+    // =====================================
 
     const updatedApplication =
       await Application.findById(
@@ -328,7 +409,9 @@ const updateApplicationStatus = async (
       application:
         updatedApplication,
     });
+
   } catch (error) {
+
     console.error(
       "Update Application Status Error:",
       error
@@ -341,9 +424,8 @@ const updateApplicationStatus = async (
   }
 };
 
-
 // =====================================
-// DOWNLOAD RESUME
+// VIEW / DOWNLOAD RESUME
 // Admin only
 // =====================================
 
@@ -352,6 +434,11 @@ const downloadResume = async (
   res
 ) => {
   try {
+
+    // =====================================
+    // FIND APPLICATION
+    // =====================================
+
     const application =
       await Application.findById(
         req.params.id
@@ -364,21 +451,27 @@ const downloadResume = async (
       });
     }
 
-    const resumePath =
-      application.resume.path;
+    // =====================================
+    // CHECK CLOUDINARY URL
+    // =====================================
 
-    if (!fs.existsSync(resumePath)) {
+    if (!application.resume?.url) {
       return res.status(404).json({
         message:
           "Resume file not found",
       });
     }
 
-    res.download(
-      resumePath,
-      application.resume.originalName
+    // =====================================
+    // REDIRECT TO CLOUDINARY
+    // =====================================
+
+    return res.redirect(
+      application.resume.url
     );
+
   } catch (error) {
+
     console.error(
       "Download Resume Error:",
       error
@@ -386,17 +479,25 @@ const downloadResume = async (
 
     res.status(500).json({
       message:
-        "Server error while downloading resume",
+        "Server error while opening resume",
     });
   }
 };
 
+// =====================================
+// EXPORT
+// =====================================
 
 module.exports = {
   createApplication,
+
   getMyApplications,
+
   checkApplication,
+
   getAllApplications,
+
   updateApplicationStatus,
+
   downloadResume,
 };

@@ -51,7 +51,7 @@ function AdminJobs() {
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        "http://localhost:5000/api/jobs/admin/all",
+        `${process.env.REACT_APP_API_URL}/api/jobs/admin/all`,
         {
           method: "GET",
           headers: {
@@ -182,8 +182,8 @@ function AdminJobs() {
       };
 
       const url = editingJob
-        ? `http://localhost:5000/api/jobs/${editingJob._id}`
-        : "http://localhost:5000/api/jobs";
+  ? `${process.env.REACT_APP_API_URL}/api/jobs/${editingJob._id}`
+  : `${process.env.REACT_APP_API_URL}/api/jobs`;
 
       const method = editingJob ? "PUT" : "POST";
 
@@ -235,7 +235,7 @@ function AdminJobs() {
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        `http://localhost:5000/api/jobs/${id}`,
+        `${process.env.REACT_APP_API_URL}/api/jobs/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -270,7 +270,7 @@ function AdminJobs() {
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        `http://localhost:5000/api/jobs/${id}/status`,
+        `${process.env.REACT_APP_API_URL}/api/jobs/${id}/status`,
         {
           method: "PATCH",
           headers: {

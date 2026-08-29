@@ -58,7 +58,7 @@ function JobDetails() {
         setError("");
 
         const response = await fetch(
-          `http://localhost:5000/api/jobs/${id}`
+          `${process.env.REACT_APP_API_URL}/api/jobs/${id}`
         );
 
         const data = await response.json();
@@ -107,7 +107,7 @@ function JobDetails() {
   ) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/applications/check/${jobId}`,
+        `${process.env.REACT_APP_API_URL}/api/applications/check/${jobId}`,
         {
           method: "GET",
 
@@ -362,7 +362,7 @@ function JobDetails() {
 
       const response =
         await fetch(
-          "http://localhost:5000/api/applications",
+          `${process.env.REACT_APP_API_URL}/api/applications`,
           {
             method: "POST",
 

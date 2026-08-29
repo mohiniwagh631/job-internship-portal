@@ -1,38 +1,15 @@
 const multer = require("multer");
-const path = require("path");
-const fs = require("fs");
 
-// Resume upload folder
-const uploadDir = path.join(
-  __dirname,
-  "../uploads/resumes"
-);
+// =====================================
+// STORE FILE TEMPORARILY IN MEMORY
+// =====================================
 
-// Create folder if it doesn't exist
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, {
-    recursive: true,
-  });
-}
+const storage = multer.memoryStorage();
 
-// Storage configuration
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploadDir);
-  },
+// =====================================
+// ONLY PDF RESUMES
+// =====================================
 
-  filename: (req, file, cb) => {
-    const uniqueName =
-      Date.now() +
-      "-" +
-      Math.round(Math.random() * 1e9) +
-      path.extname(file.originalname);
-
-    cb(null, uniqueName);
-  },
-});
-
-// Only PDF resumes
 const fileFilter = (req, file, cb) => {
   const allowedTypes = [
     "application/pdf",
@@ -48,12 +25,17 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
+// =====================================
+// MULTER CONFIGURATION
+// =====================================
+
 const uploadResume = multer({
   storage,
+
   fileFilter,
 
   limits: {
-    fileSize: 5 * 1024 * 1024,
+    fileSize: 5 * 1024 * 1024, // 5 MB
   },
 });
 

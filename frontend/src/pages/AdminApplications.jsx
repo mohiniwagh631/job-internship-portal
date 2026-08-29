@@ -26,7 +26,7 @@ function AdminApplications() {
         localStorage.getItem("token");
 
       const response = await fetch(
-        "http://localhost:5000/api/applications/admin/all",
+        `${process.env.REACT_APP_API_URL}/api/applications/admin/all`,
         {
           headers: {
             Authorization:
@@ -71,7 +71,7 @@ function AdminApplications() {
         localStorage.getItem("token");
 
       const response = await fetch(
-        `http://localhost:5000/api/applications/admin/${id}/status`,
+        `${process.env.REACT_APP_API_URL}/api/applications/admin/${id}/status`,
         {
           method: "PATCH",
 
@@ -125,7 +125,7 @@ function AdminApplications() {
         localStorage.getItem("token");
 
       const response = await fetch(
-        `http://localhost:5000/api/applications/admin/${id}/resume`,
+        `${process.env.REACT_APP_API_URL}/api/applications/admin/${id}/resume`,
         {
           headers: {
             Authorization:
