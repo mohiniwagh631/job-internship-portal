@@ -8,6 +8,8 @@ import {
 import {
   Mail,
   Lock,
+  Eye,
+  EyeOff,
   ArrowRight,
   BriefcaseBusiness,
   CheckCircle2,
@@ -20,41 +22,33 @@ import Footer from "../components/Footer";
 import "../styles/auth.css";
 
 function Login() {
-
   const navigate = useNavigate();
 
-  const [searchParams] =
-    useSearchParams();
+  const [searchParams] = useSearchParams();
 
   // Get redirect URL
-  const redirect =
-    searchParams.get("redirect");
+  const redirect = searchParams.get("redirect");
 
-  const [formData, setFormData] =
-    useState({
-      email: "",
-      password: "",
-    });
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
 
-  const [error, setError] =
-    useState("");
+  // Password visibility
+  const [showPassword, setShowPassword] = useState(false);
 
-  const [success, setSuccess] =
-    useState("");
-
-  const [loading, setLoading] =
-    useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // =====================================
   // HANDLE INPUT
   // =====================================
 
   const handleChange = (e) => {
-
     setFormData({
       ...formData,
-      [e.target.name]:
-        e.target.value,
+      [e.target.name]: e.target.value,
     });
 
     setError("");
@@ -65,18 +59,12 @@ function Login() {
   // =====================================
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
 
     setError("");
-
     setSuccess("");
 
-    if (
-      !formData.email ||
-      !formData.password
-    ) {
-
+    if (!formData.email || !formData.password) {
       setError(
         "Please enter your email and password."
       );
@@ -85,31 +73,24 @@ function Login() {
     }
 
     try {
-
       setLoading(true);
 
-      const response =
-        await fetch(
-          `${process.env.REACT_APP_API_URL}/api/auth/login`,
-          {
-            method: "POST",
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/auth/login`,
+        {
+          method: "POST",
 
-            headers: {
-              "Content-Type":
-                "application/json",
-            },
+          headers: {
+            "Content-Type": "application/json",
+          },
 
-            body: JSON.stringify(
-              formData
-            ),
-          }
-        );
+          body: JSON.stringify(formData),
+        }
+      );
 
-      const data =
-        await response.json();
+      const data = await response.json();
 
       if (!response.ok) {
-
         setError(
           data.message ||
             "Invalid email or password."
@@ -145,35 +126,22 @@ function Login() {
       // =====================================
 
       setTimeout(() => {
-
         // If user came from Apply Now
         if (redirect) {
-
           navigate(redirect);
-
           return;
         }
 
         // Admin
-        if (
-          data.user.role ===
-          "admin"
-        ) {
-
-          navigate(
-            "/admin-dashboard"
-          );
-
+        if (data.user.role === "admin") {
+          navigate("/admin-dashboard");
           return;
         }
 
         // Candidate
         navigate("/dashboard");
-
       }, 1000);
-
     } catch (error) {
-
       console.error(
         "Login Error:",
         error
@@ -182,9 +150,7 @@ function Login() {
       setError(
         "Unable to connect to the server. Please try again."
       );
-
     } finally {
-
       setLoading(false);
     }
   };
@@ -206,13 +172,10 @@ function Login() {
       ================================= */}
 
       {success && (
-
         <div className="auth-toast auth-toast-success">
 
           <div className="auth-toast-icon">
-
             <CheckCircle2 size={22} />
-
           </div>
 
           <div className="auth-toast-content">
@@ -232,14 +195,15 @@ function Login() {
             className="auth-toast-close"
             onClick={closeSuccess}
           >
-
             <X size={17} />
-
           </button>
 
         </div>
-
       )}
+
+      {/* =================================
+          LOGIN PAGE
+      ================================= */}
 
       <main className="auth-page">
 
@@ -254,11 +218,9 @@ function Login() {
           <div className="auth-intro">
 
             <div className="auth-brand-icon">
-
               <BriefcaseBusiness
                 size={25}
               />
-
             </div>
 
             <span className="auth-eyebrow">
@@ -266,26 +228,23 @@ function Login() {
             </span>
 
             <h1>
-
               Continue your
-
               <span>
                 {" "}career journey.
               </span>
-
             </h1>
 
             <p>
-
               Sign in to access your
               JobHub account, explore
               opportunities, track
               applications, and take the
               next step toward your career.
-
             </p>
 
             <div className="auth-benefits">
+
+              {/* BENEFIT 01 */}
 
               <div>
 
@@ -308,6 +267,8 @@ function Login() {
 
               </div>
 
+              {/* BENEFIT 02 */}
+
               <div>
 
                 <span className="benefit-number">
@@ -328,6 +289,8 @@ function Login() {
                 </div>
 
               </div>
+
+              {/* BENEFIT 03 */}
 
               <div>
 
@@ -376,13 +339,9 @@ function Login() {
             {/* ERROR */}
 
             {error && (
-
               <div className="auth-error">
-
                 {error}
-
               </div>
-
             )}
 
             <form
@@ -443,7 +402,11 @@ function Login() {
                   <input
                     id="password"
                     name="password"
-                    type="password"
+                    type={
+                      showPassword
+                        ? "text"
+                        : "password"
+                    }
                     value={
                       formData.password
                     }
@@ -454,6 +417,29 @@ function Login() {
                     autoComplete="current-password"
                     required
                   />
+
+                  {/* EYE BUTTON */}
+
+                  <button
+                    type="button"
+                    className="password-toggle"
+                    onClick={() =>
+                      setShowPassword(
+                        !showPassword
+                      )
+                    }
+                    aria-label={
+                      showPassword
+                        ? "Hide password"
+                        : "Show password"
+                    }
+                  >
+                    {showPassword ? (
+                      <EyeOff size={18} />
+                    ) : (
+                      <Eye size={18} />
+                    )}
+                  </button>
 
                 </div>
 
@@ -486,18 +472,15 @@ function Login() {
               >
 
                 {loading ? (
-
                   "Signing in..."
-
                 ) : (
-
                   <>
                     Sign In
+
                     <ArrowRight
                       size={18}
                     />
                   </>
-
                 )}
 
               </button>
