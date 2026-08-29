@@ -972,3 +972,28 @@
   }
 
 }
+/* Password eye button */
+
+.password-toggle {
+  border: none;
+  background: transparent;
+  padding: 4px;
+  margin-left: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #64748b;
+  cursor: pointer;
+
+  transition: color 0.2s ease;
+}
+
+.password-toggle:hover {
+  color: #2563eb;
+}
+
+.password-toggle:focus {
+  outline: none;
+}

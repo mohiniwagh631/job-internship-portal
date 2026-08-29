@@ -5,6 +5,8 @@ import {
   UserRound,
   Mail,
   Lock,
+  Eye,
+  EyeOff,
   ArrowRight,
   BriefcaseBusiness,
   CheckCircle2,
@@ -37,6 +39,11 @@ function Register() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // Password visibility states
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState(false);
 
   // =====================================
   // HANDLE INPUT CHANGE
@@ -444,7 +451,11 @@ function Register() {
                   <input
                     id="register-password"
                     name="password"
-                    type="password"
+                    type={
+                      showPassword
+                        ? "text"
+                        : "password"
+                    }
                     value={formData.password}
                     onChange={handleChange}
                     placeholder="Create a password"
@@ -452,6 +463,27 @@ function Register() {
                     autoComplete="new-password"
                     required
                   />
+
+                  <button
+                    type="button"
+                    className="password-toggle"
+                    onClick={() =>
+                      setShowPassword(
+                        !showPassword
+                      )
+                    }
+                    aria-label={
+                      showPassword
+                        ? "Hide password"
+                        : "Show password"
+                    }
+                  >
+                    {showPassword ? (
+                      <EyeOff size={18} />
+                    ) : (
+                      <Eye size={18} />
+                    )}
+                  </button>
 
                 </div>
 
@@ -476,7 +508,11 @@ function Register() {
                   <input
                     id="confirm-password"
                     name="confirmPassword"
-                    type="password"
+                    type={
+                      showConfirmPassword
+                        ? "text"
+                        : "password"
+                    }
                     value={
                       formData.confirmPassword
                     }
@@ -486,6 +522,27 @@ function Register() {
                     autoComplete="new-password"
                     required
                   />
+
+                  <button
+                    type="button"
+                    className="password-toggle"
+                    onClick={() =>
+                      setShowConfirmPassword(
+                        !showConfirmPassword
+                      )
+                    }
+                    aria-label={
+                      showConfirmPassword
+                        ? "Hide confirm password"
+                        : "Show confirm password"
+                    }
+                  >
+                    {showConfirmPassword ? (
+                      <EyeOff size={18} />
+                    ) : (
+                      <Eye size={18} />
+                    )}
+                  </button>
 
                 </div>
 
