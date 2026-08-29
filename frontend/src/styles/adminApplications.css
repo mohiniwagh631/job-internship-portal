@@ -1,0 +1,610 @@
+/* =========================================================
+   ADMIN APPLICATIONS PAGE
+========================================================= */
+
+.admin-applications-page {
+  min-height: 100vh;
+  padding: 40px;
+  box-sizing: border-box;
+
+  background:
+    radial-gradient(
+      circle at 85% 5%,
+      rgba(37, 99, 235, 0.12),
+      transparent 30%
+    ),
+    #050816;
+
+  color: #f8fafc;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.admin-applications-header {
+  max-width: 1250px;
+  margin: 0 auto 35px;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.admin-applications-header > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-applications-back {
+  width: fit-content;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-bottom: 20px;
+
+  color: #60a5fa;
+  text-decoration: none;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  transition: all 0.2s ease;
+}
+
+.admin-applications-back:hover {
+  color: #93c5fd;
+  transform: translateX(-2px);
+}
+
+/* APPLICATION MANAGEMENT */
+
+.admin-applications-header span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #8b5cf6;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+}
+
+/* PAGE TITLE */
+
+.admin-applications-header h1 {
+  margin: 0 0 8px;
+
+  color: #f8fafc;
+
+  font-size: 36px;
+  line-height: 1.2;
+  font-weight: 750;
+}
+
+.admin-applications-header p {
+  margin: 0;
+
+  color: #94a3b8;
+
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.admin-applications-page > div:not(
+  .admin-applications-list
+) {
+  box-sizing: border-box;
+}
+
+.admin-applications-page > div:first-of-type {
+  max-width: 1250px;
+  margin: 0 auto;
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.error-message {
+  max-width: 1250px;
+
+  margin: 20px auto;
+  padding: 15px 18px;
+
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: 10px;
+
+  background: rgba(239, 68, 68, 0.08);
+
+  color: #fca5a5;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   APPLICATION LIST
+========================================================= */
+
+.admin-applications-list {
+  max-width: 1250px;
+
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+}
+
+
+/* =========================================================
+   APPLICATION CARD
+========================================================= */
+
+.admin-application-card {
+  padding: 24px;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(230px, 1.2fr)
+    minmax(220px, 1fr)
+    130px
+    150px
+    135px;
+
+  align-items: center;
+
+  gap: 24px;
+
+  background: #0b1220;
+
+  border: 1px solid #1e293b;
+
+  border-radius: 16px;
+
+  box-sizing: border-box;
+
+  transition: all 0.2s ease;
+}
+
+.admin-application-card:hover {
+  border-color: rgba(96, 165, 250, 0.3);
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+
+/* =========================================================
+   CANDIDATE INFO
+========================================================= */
+
+.candidate-info {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  min-width: 0;
+}
+
+.candidate-avatar {
+  width: 48px;
+  height: 48px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #4f46e5,
+      #7c3aed
+    );
+
+  color: #ffffff;
+
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.candidate-info > div:last-child {
+  min-width: 0;
+}
+
+.candidate-info h2 {
+  margin: 0 0 6px;
+
+  color: #f8fafc;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.candidate-info p {
+  margin: 0;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  color: #94a3b8;
+
+  font-size: 13px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.candidate-info p svg {
+  flex-shrink: 0;
+
+  color: #64748b;
+}
+
+
+/* =========================================================
+   JOB INFORMATION
+========================================================= */
+
+.applied-job {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+
+  min-width: 0;
+}
+
+.applied-job strong {
+  display: block;
+
+  color: #e2e8f0;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.applied-job span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  color: #94a3b8;
+
+  font-size: 13px;
+}
+
+.applied-job span:last-child {
+  color: #64748b;
+}
+
+.applied-job svg {
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   APPLICATION DATE
+========================================================= */
+
+.application-date {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  color: #94a3b8;
+
+  font-size: 13px;
+
+  white-space: nowrap;
+}
+
+.application-date svg {
+  color: #64748b;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   STATUS CONTROL
+========================================================= */
+
+.application-status-control {
+  display: flex;
+  align-items: center;
+}
+
+.application-status-control select {
+  width: 100%;
+
+  padding: 10px 30px 10px 12px;
+
+  border: 1px solid #334155;
+  border-radius: 8px;
+
+  background: #070d19;
+
+  color: #e2e8f0;
+
+  outline: none;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.application-status-control select:hover {
+  border-color: #475569;
+}
+
+.application-status-control select:focus {
+  border-color: #3b82f6;
+
+  box-shadow:
+    0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.application-status-control option {
+  background: #0b1220;
+  color: #f8fafc;
+}
+
+
+/* =========================================================
+   RESUME BUTTON
+========================================================= */
+
+.resume-button {
+  width: 100%;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 10px 13px;
+
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  border-radius: 8px;
+
+  background: rgba(37, 99, 235, 0.1);
+
+  color: #60a5fa;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.resume-button:hover {
+  background: rgba(37, 99, 235, 0.18);
+
+  border-color: rgba(59, 130, 246, 0.45);
+
+  color: #93c5fd;
+}
+
+.resume-button:active {
+  transform: scale(0.97);
+}
+
+
+/* =========================================================
+   NO APPLICATIONS
+========================================================= */
+
+.no-applications {
+  max-width: 1250px;
+
+  min-height: 300px;
+
+  margin: 0 auto;
+
+  padding: 50px 25px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+
+  text-align: center;
+
+  background: #0b1220;
+
+  border: 1px solid #1e293b;
+
+  border-radius: 16px;
+
+  color: #64748b;
+}
+
+.no-applications svg {
+  margin-bottom: 16px;
+
+  color: #475569;
+}
+
+.no-applications h2 {
+  margin: 0 0 8px;
+
+  color: #cbd5e1;
+
+  font-size: 20px;
+}
+
+.no-applications p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .admin-applications-page {
+    padding: 35px 25px 60px;
+  }
+
+  .admin-application-card {
+    grid-template-columns:
+      1fr 1fr;
+
+    gap: 20px;
+  }
+
+  .candidate-info {
+    grid-column: 1;
+  }
+
+  .applied-job {
+    grid-column: 2;
+  }
+
+  .application-date {
+    grid-column: 1;
+  }
+
+  .application-status-control {
+    grid-column: 2;
+  }
+
+  .resume-button {
+    grid-column: 1 / -1;
+
+    width: 180px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+  .admin-applications-page {
+    padding: 25px 15px 50px;
+  }
+
+  .admin-applications-header {
+    margin-bottom: 25px;
+  }
+
+  .admin-applications-back {
+    margin-bottom: 18px;
+  }
+
+  .admin-applications-header h1 {
+    font-size: 30px;
+  }
+
+  .admin-applications-header p {
+    font-size: 13px;
+  }
+
+  .admin-application-card {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 18px;
+
+    padding: 20px;
+
+    border-radius: 14px;
+  }
+
+  .candidate-info {
+    width: 100%;
+  }
+
+  .candidate-avatar {
+    width: 44px;
+    height: 44px;
+
+    font-size: 16px;
+  }
+
+  .candidate-info h2 {
+    font-size: 16px;
+  }
+
+  .applied-job {
+    padding-top: 16px;
+
+    border-top: 1px solid #172033;
+  }
+
+  .application-date {
+    padding-top: 15px;
+
+    border-top: 1px solid #172033;
+  }
+
+  .application-status-control {
+    width: 100%;
+  }
+
+  .application-status-control select {
+    width: 100%;
+
+    padding: 11px 12px;
+  }
+
+  .resume-button {
+    width: 100%;
+
+    padding: 11px;
+  }
+}

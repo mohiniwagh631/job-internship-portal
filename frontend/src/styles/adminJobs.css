@@ -1,0 +1,834 @@
+/* =========================================
+   ADMIN JOBS PAGE
+========================================= */
+
+.admin-jobs-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(88, 28, 135, 0.12),
+      transparent 35%
+    ),
+    #050712;
+
+  color: #f8fafc;
+  padding: 42px 44px 60px;
+}
+
+
+/* =========================================
+   PAGE HEADER
+========================================= */
+
+.admin-jobs-header {
+  max-width: 1400px;
+  margin: 0 auto 38px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  gap: 30px;
+}
+
+.admin-jobs-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  color: #7f8ba3;
+  text-decoration: none;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  margin-bottom: 20px;
+
+  transition: 0.2s ease;
+}
+
+.admin-jobs-back:hover {
+  color: #a78bfa;
+}
+
+
+.admin-jobs-label,
+.admin-jobs-section-heading > div > span,
+.admin-form-heading span {
+
+  display: block;
+
+  color: #8b5cf6;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 1.8px;
+
+  margin-bottom: 9px;
+}
+
+
+.admin-jobs-header h1 {
+
+  margin: 0 0 9px;
+
+  font-size: 36px;
+  line-height: 1.15;
+
+  font-weight: 700;
+
+  letter-spacing: -1px;
+
+  color: #f8fafc;
+}
+
+
+.admin-jobs-header p {
+
+  margin: 0;
+
+  color: #7f8ba3;
+
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+
+/* =========================================
+   CREATE BUTTON
+========================================= */
+
+.create-job-button,
+.save-job-button {
+
+  border: 1px solid rgba(139, 92, 246, 0.45);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  background: linear-gradient(
+    135deg,
+    #7c3aed,
+    #6d28d9
+  );
+
+  color: #ffffff;
+
+  padding: 12px 19px;
+
+  border-radius: 9px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 25px rgba(124, 58, 237, 0.18);
+
+  transition: all 0.2s ease;
+}
+
+.create-job-button:hover,
+.save-job-button:hover {
+
+  transform: translateY(-1px);
+
+  background: linear-gradient(
+    135deg,
+    #8b5cf6,
+    #7c3aed
+  );
+
+  box-shadow:
+    0 10px 30px rgba(124, 58, 237, 0.25);
+}
+
+
+/* =========================================
+   MESSAGES
+========================================= */
+
+.admin-success-message,
+.admin-error-message {
+
+  max-width: 1400px;
+
+  margin: 0 auto 20px;
+
+  padding: 13px 16px;
+
+  border-radius: 10px;
+
+  font-size: 13px;
+}
+
+
+.admin-success-message {
+
+  background: rgba(16, 185, 129, 0.08);
+
+  border: 1px solid rgba(16, 185, 129, 0.18);
+
+  color: #34d399;
+}
+
+
+.admin-error-message {
+
+  background: rgba(239, 68, 68, 0.08);
+
+  border: 1px solid rgba(239, 68, 68, 0.18);
+
+  color: #f87171;
+}
+
+
+/* =========================================
+   FORM CARD
+========================================= */
+
+.admin-job-form-card {
+
+  max-width: 1400px;
+
+  margin: 0 auto 36px;
+
+  padding: 28px;
+
+  background: rgba(11, 16, 29, 0.92);
+
+  border: 1px solid #1a2233;
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.18);
+}
+
+
+.admin-form-heading {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  margin-bottom: 27px;
+}
+
+
+.admin-form-heading h2 {
+
+  margin: 0;
+
+  font-size: 22px;
+
+  font-weight: 650;
+
+  color: #f8fafc;
+}
+
+
+.close-form-button {
+
+  width: 36px;
+  height: 36px;
+
+  border-radius: 8px;
+
+  border: 1px solid #202a3b;
+
+  background: #111827;
+
+  color: #8b98ad;
+
+  display: grid;
+
+  place-items: center;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.close-form-button:hover {
+
+  color: #ffffff;
+
+  border-color: #7c3aed;
+
+  background: rgba(124, 58, 237, 0.1);
+}
+
+
+/* =========================================
+   FORM
+========================================= */
+
+.admin-job-form {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 20px;
+}
+
+
+.form-grid {
+
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 18px;
+}
+
+
+.form-group {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+
+.form-group label {
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  color: #cbd5e1;
+}
+
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+  background: #080d18;
+
+  border: 1px solid #202a3b;
+
+  color: #f8fafc;
+
+  border-radius: 8px;
+
+  padding: 12px 13px;
+
+  font-family: inherit;
+
+  font-size: 13px;
+
+  outline: none;
+
+  transition: 0.2s ease;
+}
+
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+
+  color: #566176;
+}
+
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+
+  border-color: #7c3aed;
+
+  box-shadow:
+    0 0 0 3px rgba(124, 58, 237, 0.08);
+}
+
+
+.form-group textarea {
+
+  resize: vertical;
+
+  min-height: 110px;
+}
+
+
+.form-group small {
+
+  color: #64748b;
+
+  font-size: 11px;
+}
+
+
+.admin-form-actions {
+
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  padding-top: 6px;
+}
+
+
+.cancel-job-button {
+
+  border: 1px solid #202a3b;
+
+  background: #0b111d;
+
+  color: #94a3b8;
+
+  border-radius: 8px;
+
+  padding: 11px 18px;
+
+  cursor: pointer;
+
+  font-size: 13px;
+
+  transition: 0.2s ease;
+}
+
+
+.cancel-job-button:hover {
+
+  background: #151d2c;
+
+  color: #ffffff;
+
+  border-color: #334155;
+}
+
+
+/* =========================================
+   JOB SECTION
+========================================= */
+
+.admin-jobs-section {
+
+  max-width: 1400px;
+
+  margin: 0 auto;
+}
+
+
+.admin-jobs-section-heading {
+
+  margin-bottom: 20px;
+}
+
+
+.admin-jobs-section-heading h2 {
+
+  margin: 0;
+
+  font-size: 22px;
+
+  font-weight: 650;
+
+  color: #f8fafc;
+}
+
+
+/* =========================================
+   JOB TABLE
+========================================= */
+
+.admin-jobs-table {
+
+  background: rgba(11, 16, 29, 0.94);
+
+  border: 1px solid #1a2233;
+
+  border-radius: 14px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.16);
+}
+
+
+.admin-jobs-table-header,
+.admin-job-row {
+
+  display: grid;
+
+  grid-template-columns:
+    2.2fr
+    1.3fr
+    1fr
+    1fr
+    0.8fr
+    1fr;
+
+  align-items: center;
+
+  gap: 20px;
+
+  padding: 17px 20px;
+}
+
+
+.admin-jobs-table-header {
+
+  background: #101827;
+
+  color: #71809a;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1px;
+}
+
+
+.admin-job-row {
+
+  border-top: 1px solid #182132;
+
+  min-height: 72px;
+
+  transition: background 0.2s ease;
+}
+
+
+.admin-job-row:hover {
+
+  background: rgba(124, 58, 237, 0.035);
+}
+
+
+/* =========================================
+   JOB TITLE
+========================================= */
+
+.admin-job-title {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  min-width: 0;
+}
+
+
+.admin-job-logo {
+
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  display: grid;
+
+  place-items: center;
+
+  background: #111a2a;
+
+  border: 1px solid #253047;
+
+  border-radius: 9px;
+
+  color: #ffffff;
+
+  font-weight: 700;
+}
+
+
+.admin-job-logo img {
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  border-radius: 8px;
+}
+
+
+.admin-job-title div:last-child {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+
+  min-width: 0;
+}
+
+
+.admin-job-title strong {
+
+  font-size: 14px;
+
+  color: #e8edf5;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+
+.admin-job-title span {
+
+  font-size: 12px;
+
+  color: #64748b;
+}
+
+
+/* =========================================
+   OTHER DATA
+========================================= */
+
+.admin-job-location {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  color: #94a3b8;
+
+  font-size: 13px;
+}
+
+
+.admin-job-type,
+.admin-job-deadline {
+
+  font-size: 13px;
+
+  color: #94a3b8;
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+.admin-job-status {
+
+  width: fit-content;
+
+  padding: 5px 10px;
+
+  border-radius: 20px;
+
+  font-size: 10px;
+
+  font-weight: 700;
+}
+
+
+.admin-job-status.active {
+
+  color: #34d399;
+
+  background: rgba(16, 185, 129, 0.09);
+
+  border: 1px solid rgba(16, 185, 129, 0.12);
+}
+
+
+.admin-job-status.inactive {
+
+  color: #f87171;
+
+  background: rgba(239, 68, 68, 0.08);
+
+  border: 1px solid rgba(239, 68, 68, 0.12);
+}
+
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+.admin-job-actions {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+}
+
+
+.admin-job-actions button {
+
+  width: 34px;
+  height: 34px;
+
+  border-radius: 7px;
+
+  border: 1px solid #202a3b;
+
+  background: #101827;
+
+  color: #8290a6;
+
+  display: grid;
+
+  place-items: center;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+
+.admin-job-actions button:hover {
+
+  color: #ffffff;
+
+  background: #172033;
+
+  border-color: #35415a;
+}
+
+
+.admin-job-actions .delete-action:hover {
+
+  color: #f87171;
+
+  border-color: rgba(248, 113, 113, 0.3);
+
+  background: rgba(239, 68, 68, 0.07);
+}
+
+
+/* =========================================
+   EMPTY / LOADING
+========================================= */
+
+.admin-jobs-loading,
+.admin-no-jobs {
+
+  padding: 70px 20px;
+
+  text-align: center;
+
+  background: #0b101d;
+
+  border: 1px solid #1a2233;
+
+  border-radius: 14px;
+
+  color: #71809a;
+}
+
+
+.admin-no-jobs h3 {
+
+  color: #f8fafc;
+
+  margin: 15px 0 7px;
+
+  font-size: 18px;
+}
+
+
+.admin-no-jobs p {
+
+  margin-bottom: 20px;
+
+  color: #64748b;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1000px) {
+
+  .admin-jobs-page {
+
+    padding: 35px 28px 50px;
+  }
+
+  .admin-jobs-table {
+
+    overflow-x: auto;
+  }
+
+  .admin-jobs-table-header,
+  .admin-job-row {
+
+    min-width: 950px;
+  }
+}
+
+
+@media (max-width: 700px) {
+
+  .admin-jobs-page {
+
+    padding: 25px 18px 40px;
+  }
+
+  .admin-jobs-header {
+
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+  .admin-jobs-header h1 {
+
+    font-size: 29px;
+  }
+
+  .create-job-button {
+
+    width: 100%;
+  }
+
+  .form-grid {
+
+    grid-template-columns: 1fr;
+  }
+
+  .admin-job-form-card {
+
+    padding: 20px;
+  }
+
+  .admin-form-actions {
+
+    flex-direction: column-reverse;
+  }
+
+  .cancel-job-button,
+  .save-job-button {
+
+    width: 100%;
+  }
+}
